@@ -104,9 +104,11 @@ Resources:
   Pipeline:
     Type: AWS::CodePipeline::Pipeline
     Properties:
-      ArtifactStore:
-        Location: !Ref BuildArtifactsBucket
-        Type: S3
+      ArtifactStores:
+        - Region: ap-south-1
+          ArtifactStore:
+            Location: !Ref BuildArtifactsBucket
+            Type: S3
       Name: demo-cicd-codepipeline
       RoleArn: !GetAtt CodePipelineExecutionRole.Arn
       Stages:
@@ -188,7 +190,7 @@ Resources:
                 FunctionName: !Ref IntegrationTestLambda # integration-test-lambda-HelloWorldFunction-7B8Z9SLEFTQU
               OutputArtifacts: []
               InputArtifacts: []
-              Region: us-east-1
+              Region: ap-south-1
               RunOrder: 3
         - Name: Prod
           Actions:
