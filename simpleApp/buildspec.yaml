@@ -19,9 +19,10 @@ phases:
       - echo "Install phase"
       - pip install --upgrade pip
       - pip install pipenv
-      - pipenv install awscli aws-sam-cli
+      # - pipenv install awscli aws-sam-cli
       - node -v
       - npm -v
+      - aws --version
       - cd simpleApp
       - npm install
   pre_build:
