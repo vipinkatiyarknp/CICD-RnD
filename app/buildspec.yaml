@@ -23,7 +23,7 @@ phases:
       - node -v
       - npm -v
       - aws --version
-      - cd simpleApp
+      - cd app
       - npm install
   pre_build:
     commands:
@@ -45,5 +45,5 @@ phases:
 artifacts:
   files:
     # list of local files relative to this build environment that will be added to the final artifact (zip)
-    - simpleApp/packaged.yml
+    - app/packaged.yml
   discard-paths: yes

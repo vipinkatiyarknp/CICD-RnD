@@ -1,7 +1,7 @@
-simpleApp/.aws-sam/
-simpleApp/node_modules/
+app/.aws-sam/
+app/node_modules/
 .vscode/
-simpleApp/.aws-sam/build/
-simpleApp/samconfig.toml
+app/.aws-sam/build/
+app/samconfig.toml
 testingApp/samconfig.toml
 integration-test-lambda/samconfig.toml
