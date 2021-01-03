@@ -25,7 +25,7 @@ phases:
       - aws --version
       - cd app
       - npm install
-      - cd app/function
+      - cd app/functions
       - npm install
   pre_build:
     commands:
