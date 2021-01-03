@@ -16,23 +16,23 @@ Parameters:
   GithubRepo:
     Description: Gitub Repository name
     Type: AWS::SSM::Parameter::Value<String>
-    Default: /service/demo-cicd-pipeline/github/repo
+    Default: /service/ipp-cicd-pipeline/github/repo
 
   GithubToken:
     Description: Github OAuth Token with full permissions on admin:repo_hook and repo
     Type: AWS::SSM::Parameter::Value<String>
     NoEcho: true
-    Default: /service/demo-cicd-pipeline/github/token
+    Default: /service/ipp-cicd-pipeline/github/token
 
   GithubUser:
     Description: Github user where the repository lives
     Type: AWS::SSM::Parameter::Value<String>
-    Default: /service/demo-cicd-pipeline/github/user
+    Default: /service/ipp-cicd-pipeline/github/user
 
   IntegrationTestLambda:
     Description: Name of the lambda function that will be used for running integration tests
     Type: AWS::SSM::Parameter::Value<String>
-    Default: /service/demo-cicd-pipeline/lambda/name
+    Default: /service/ipp-cicd-pipeline/lambda/name
 
 Resources:
   ######   #######  ##     ## ########   ######  ########
@@ -55,7 +55,7 @@ Resources:
         - Key: "Stack"
           Value: !Ref AWS::StackName
         - Key: "Project"
-          Value: demo-cicd-codepipeline
+          Value: ipp-cicd-codepipeline
     DeletionPolicy: Retain
 
   ########  ##     ## #### ##       ########
@@ -69,8 +69,8 @@ Resources:
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: demo-cicd-codepipeline
-      Description: Build project for the demo-cicd-codepipeline
+      Name: ipp-cicd-codepipeline
+      Description: Build project for the ipp-cicd-codepipeline
       Artifacts:
         Type: CODEPIPELINE
       Environment:
@@ -91,7 +91,7 @@ Resources:
         - Key: "Stack"
           Value: !Ref AWS::StackName
         - Key: "Project"
-          Value: demo-cicd-codepipeline
+          Value: ipp-cicd-codepipeline
 
   ########  #### ########  ######## ##       #### ##    ## ########
   ##     ##  ##  ##     ## ##       ##        ##  ###   ## ##
@@ -109,7 +109,7 @@ Resources:
           ArtifactStore:
             Location: !Ref BuildArtifactsBucket
             Type: S3
-      Name: demo-cicd-codepipeline
+      Name: ipp-cicd-codepipeline
       RoleArn: !GetAtt CodePipelineExecutionRole.Arn
       Stages:
         - Name: Source
@@ -155,8 +155,8 @@ Resources:
                 # More info on Possible Values for Cloudformation: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/continuous-delivery-codepipeline-action-reference.html#w2ab2c13c13b9
                 ActionMode: CHANGE_SET_REPLACE
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
-                StackName: demo-cicd-codepipeline-Stage
-                ChangeSetName: demo-cicd-codepipeline-ChangeSet-Stage
+                StackName: ipp-cicd-codepipeline-Stage
+                ChangeSetName: ipp-cicd-codepipeline-ChangeSet-Stage
                 TemplatePath: BuildArtifactAsZip::packaged.yml
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: |
@@ -175,10 +175,10 @@ Resources:
               Configuration:
                 ActionMode: CHANGE_SET_EXECUTE
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
-                StackName: demo-cicd-codepipeline-Stage
-                ChangeSetName: demo-cicd-codepipeline-ChangeSet-Stage
+                StackName: ipp-cicd-codepipeline-Stage
+                ChangeSetName: ipp-cicd-codepipeline-ChangeSet-Stage
               OutputArtifacts:
-                - Name: demo-cicd-codepipelineStageChangeSet
+                - Name: ipp-cicd-codepipelineStageChangeSet
               RunOrder: 2
             - Name: LamdbaRunTests #https://docs.aws.amazon.com/codepipeline/latest/userguide/action-reference-Lambda.html
               ActionTypeId:
@@ -210,8 +210,8 @@ Resources:
               Configuration:
                 ActionMode: CHANGE_SET_REPLACE
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
-                StackName: demo-cicd-codepipeline-Prod
-                ChangeSetName: demo-cicd-codepipeline-ChangeSet-Prod
+                StackName: ipp-cicd-codepipeline-Prod
+                ChangeSetName: ipp-cicd-codepipeline-ChangeSet-Prod
                 TemplatePath: BuildArtifactAsZip::packaged.yml
                 Capabilities: CAPABILITY_IAM
                 ParameterOverrides: |
@@ -230,10 +230,10 @@ Resources:
               Configuration:
                 ActionMode: CHANGE_SET_EXECUTE
                 RoleArn: !GetAtt CloudFormationExecutionRole.Arn
-                StackName: demo-cicd-codepipeline-Prod
-                ChangeSetName: demo-cicd-codepipeline-ChangeSet-Prod
+                StackName: ipp-cicd-codepipeline-Prod
+                ChangeSetName: ipp-cicd-codepipeline-ChangeSet-Prod
               OutputArtifacts:
-                - Name: demo-cicd-codepipelineProdChangeSet
+                - Name: ipp-cicd-codepipelineProdChangeSet
               RunOrder: 3
 
   ####    ###    ##     ##
@@ -268,8 +268,8 @@ Resources:
                   - "logs:CreateLogStream"
                   - "logs:PutLogEvents"
                 Resource:
-                  - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/demo-cicd-codepipeline"
-                  - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/demo-cicd-codepipeline:*"
+                  - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/ipp-cicd-codepipeline"
+                  - !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/ipp-cicd-codepipeline:*"
         - PolicyName: CodeBuildArtifactsBucket
           PolicyDocument:
             Version: "2012-10-17"
@@ -359,7 +359,7 @@ Resources:
                   - "cloudformation:SetStackPolicy"
                   - "cloudformation:ValidateTemplate"
                 Resource:
-                  - !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/demo-cicd-codepipeline*/*"
+                  - !Sub "arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ipp-cicd-codepipeline*/*"
                   - !Sub "arn:aws:cloudformation:${AWS::Region}:aws:transform/Serverless-2016-10-31"
 
 Outputs:

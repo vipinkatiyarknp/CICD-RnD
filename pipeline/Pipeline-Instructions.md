@@ -16,26 +16,26 @@ Replace the placeholders with values corresponding to your GitHub Repo and Token
 
 ```bash
 aws ssm put-parameter \
-    --name "/service/demo-cicd-pipeline/github/repo" \
-    --description "Github Repository name for Cloudformation Stack demo-cicd-pipeline" \
+    --name "/service/ipp-cicd-pipeline/github/repo" \
+    --description "Github Repository name for Cloudformation Stack ipp-cicd-pipeline" \
     --type "String" \
     --value "GITHUB_REPO_NAME"
 
 aws ssm put-parameter \
-    --name " /service/demo-cicd-pipeline/github/token" \
-    --description "Github Token for Cloudformation Stack demo-cicd-pipeline" \
+    --name " /service/ipp-cicd-pipeline/github/token" \
+    --description "Github Token for Cloudformation Stack ipp-cicd-pipeline" \
     --type "String" \
     --value "TOKEN"
 
 aws ssm put-parameter \
-    --name "/service/demo-cicd-pipeline/github/user" \
-    --description "Github Username for Cloudformation Stack demo-cicd-pipeline" \
+    --name "/service/ipp-cicd-pipeline/github/user" \
+    --description "Github Username for Cloudformation Stack ipp-cicd-pipeline" \
     --type "String" \
     --value "GITHUB_USER"
 
 aws ssm put-parameter \
-    --name "/service/demo-cicd-pipeline/lambda/name" \
-    --description "Name of the Lambda functions that will be used to run tesets on the demo-cicd-pipeline" \
+    --name "/service/ipp-cicd-pipeline/lambda/name" \
+    --description "Name of the Lambda functions that will be used to run tesets on the ipp-cicd-pipeline" \
     --type "String" \
     --value "LAMBDANAME"
 ```
@@ -94,7 +94,7 @@ Run the following AWS CLI command to create your first pipeline for your SAM bas
 
 ```bash
 aws cloudformation create-stack \
-    --stack-name demo-cicd-pipeline \
+    --stack-name ipp-cicd-pipeline \
     --template-body file://pipeline.yml \
     --capabilities CAPABILITY_NAMED_IAM
 ```
@@ -103,7 +103,7 @@ This may take a couple of minutes to complete, therefore give it a minute or two
 
 ```bash
 aws cloudformation describe-stacks \
-    --stack-name demo-cicd-pipeline \
+    --stack-name ipp-cicd-pipeline \
     --query 'Stacks[].Outputs'
 ```
 
@@ -145,7 +145,7 @@ If you want to do some changes after you have deployed the pipeline simply run t
 
 ```bash
 aws cloudformation update-stack \
-    --stack-name demo-cicd-pipeline \
+    --stack-name ipp-cicd-pipeline \
     --template-body file://pipeline.yml \
     --capabilities CAPABILITY_NAMED_IAM
 ```

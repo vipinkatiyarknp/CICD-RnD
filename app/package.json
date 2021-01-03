@@ -4,8 +4,8 @@
   "description": "",
   "main": "",
   "config": {
-    "stackName": "demo-mad1",
-    "bucketName": "marcia-deploys"
+    "stackName": "demo-ipp",
+    "bucketName": "ipp-deploys"
   },
   "scripts": {
     "test": "jest tests/*"
