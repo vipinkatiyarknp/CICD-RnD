@@ -25,6 +25,8 @@ phases:
       - aws --version
       - cd app
       - npm install
+      - cd app/function
+      - npm install
   pre_build:
     commands:
       - echo "Pre-build phase"
