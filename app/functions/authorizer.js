@@ -35,6 +35,7 @@ const allow = {
 function getSigningKey (header, callback) {
     keyClient.getSigningKey(header.kid, function(err, key) {
         if(err){
+            console.log("error in get signing key")
             return;
         }
         const signingKey = key.publicKey || key.rsaPublicKey;
@@ -50,10 +51,12 @@ function extractTokenFromHeader(e) {
 }
 function validateToken(token, callback) {
     jwt.verify(token, getSigningKey, function (error) {
+       
         if (error) {
             console.log("AUTH ERROR>>>",error);
             callback("Unauthorized")
         } else {
+            console.log("TOKEN VERIFIED>>>");
             callback(null, allow)
         }
     })

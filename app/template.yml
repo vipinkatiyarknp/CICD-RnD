@@ -32,7 +32,7 @@ Mappings:
       tableName: ipp-preference-prod
   JwksResourcesName:
     dev:
-      certificateUri: "https://www3.wipo.int/am/oauth2/connect/jwk_uri"
+      certificateUri: "https://www5.wipo.int/am/oauth2/connect/jwk_uri"
     staging:
       certificateUri: "https://www5.wipo.int/am/oauth2/connect/jwk_uri"
     prod:
@@ -47,7 +47,7 @@ Globals:
     MemorySize: 256
     Timeout: 100
     Tracing: Active
-    CodeUri: ./functions
+    CodeUri: ./functions/
 
 Resources:
   ApiGatewayRestApi:
@@ -87,7 +87,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayRestApi
-            Path: preferences
+            Path: /preferences
             Method: GET
 
   CreatePreference:
@@ -108,7 +108,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayRestApi
-            Path: 'preferences'
+            Path: /preferences
             Method: POST
   GetPreference:
     Type: AWS::Serverless::Function
@@ -128,7 +128,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayRestApi
-            Path: preferences/{preferenceId}
+            Path: /preferences/{preferenceId}
             Method: GET
 
   UpdatePreference:
@@ -149,7 +149,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayRestApi
-            Path: preferences/{preferenceId}
+            Path: /preferences/{preferenceId}
             Method: PUT
 
   DeletePreference:
@@ -170,7 +170,7 @@ Resources:
           Type: Api
           Properties:
             RestApiId: !Ref ApiGatewayRestApi
-            Path: preferences/{preferenceId}
+            Path: /preferences/{preferenceId}
             Method: DELETE
 
   MyDynamoDBTable:
