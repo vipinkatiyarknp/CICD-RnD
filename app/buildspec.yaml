@@ -27,6 +27,7 @@ phases:
       - npm install
       - cd functions
       - npm install
+      -- cd ..
   pre_build:
     commands:
       - echo "Pre-build phase"
